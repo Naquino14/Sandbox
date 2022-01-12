@@ -1,7 +1,12 @@
 ﻿using System;
 using c = System.Console;
-
+using mybsallsa;
+using ARC;
 using GenericLinkedList;
+using System.Security.Cryptography;
+using System.Security;
+using System.Text;
+
 
 namespace Sandbox
 {
@@ -9,33 +14,29 @@ namespace Sandbox
     {
         public static void Main(string[] vs)
         {
-            var baseNode = new Node<string>("pee pee", "brr");
-            var mll = new GenericLinkedList.LinkedList<string>(baseNode);
+            //using (Aes aes = Aes.Create())
+            //{
+            //    aes.Key = Encoding.ASCII.GetBytes("funnie key moment");
+            //    // nah this is inconvenient to use
+            //}
 
-            var newNodeLole = new Node<string>("poo poo");
-            mll.Append(newNodeLole);
-
-            var cock = new Node<string>("cock and balls");
-            mll.Append(cock);
-
-            var lole = new Node<string>("wee wee", "wee wee id");
-            mll.Append(lole);
-
-            if (mll.TryGetNodeAt(3, out var o)) {
-
-                if (o == null) o = new Node<string>("nul");
-
-                c.WriteLine(o.data);
-            } else
-                throw new NullReferenceException();
-
-            if (mll.TryGetNodeAt("brr", out var oh))
+            #pragma warning disable IDE0063
+            using (var arc = new ARC128())
             {
-                oh ??= new Node<string>("nul");
-                c.WriteLine(oh.data);
+                c.Write("IV: ");
+                var iv = arc.GenerateIV();
+                foreach (var x in iv)
+                    c.Write(x.ToString("X"));
+                c.WriteLine($" Size: {iv.Length}");
+
+                c.Write(" K: ");
+                var key = arc.GenerateKey();
+                foreach (var y in key)
+                    c.Write(y.ToString("X"));
+                c.WriteLine($" Size: {key.Length}");
+
+
             }
-            else
-                throw new NullReferenceException();
         }
     }
 }
