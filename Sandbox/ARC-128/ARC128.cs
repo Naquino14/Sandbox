@@ -2,7 +2,10 @@
 // Copyright 2022 Nathaniel Aquino, All rights reserved.
 // ARC128 version 0???? reminder that this is a sandbox
 
+// TODO: get rid of object serialization
+
 using System.Text;
+using System.Runtime.InteropServices;
 
 namespace ARC
 {
@@ -13,6 +16,9 @@ namespace ARC
         public byte[] iv { get; private set; }
 
         private bool disposedValue;
+
+        private const int readCount = 128;
+
 
         #region constructors
 #pragma warning disable IDE0003
@@ -42,7 +48,7 @@ namespace ARC
         /// <summary>
         /// Creates a new instance of ARC128, and allows for arguments to be passed in. 
         /// </summary>
-        /// <param name="data">The data to be encrypted with ARC-128. All data gets transformed into a stream of bytes before being encrypted.</param>
+        /// <param name="data">The data to be encrypted with ARC-128. All data gets transformed into an array of bytes before being encrypted.</param>
         /// <param name="key">The key used when encrypting with ARC-128.This property is randomly generated if the parameter is null at the time ARC128() is called. Keys that are smaller than 16 bytes will be padded, and Keys larger than 16 bytes will be compressed into 16 bytes</param>
         /// <param name="iv">The Initialization Vector used when encrypting with ARC-128. This property is randomly generated if the parameter is null at the time ARC128() is called. IVs that are smaller than 16 bytes will be padded, and IVs larger than 16 bytes will be compressed into 16 bytes</param>
         public ARC128(object data, byte[]? key = null, byte[]? iv = null) : this(key, iv) => this.data = data;
@@ -50,7 +56,7 @@ namespace ARC
         /// <summary>
         /// Creates a new instance of ARC128, and allows for string representations of arguments to be passed in.
         /// </summary>
-        /// <param name="data">The data string to be encrypted with ARC-128. All data gets transformed into a stream of bytes before being encrypted.</param>
+        /// <param name="data">The data string to be encrypted with ARC-128. All data gets transformed into an array of bytes before being encrypted.</param>
         /// <param name="key">The key string used when encrypting with ARC-128.This property is randomly generated if the parameter is null at the time ARC128() is called. Keys that are smaller than 16 bytes will be padded, and Keys larger than 16 bytes will be compressed into 16 bytes</param>
         /// <param name="iv">The IV string used when encrypting with ARC-128. This propery is randomly generated if the parameter is null at the time ARC128() is called. IVs that are smaller than 16 bytes will be padded, and IVs larger than 16 bytes will be compressed into 16 bytes.</param>
         public ARC128(string data, string? key = null, string? iv = null)
@@ -146,17 +152,29 @@ namespace ARC
             /// im pretty sure as well that the IV, and each subblock can be ciphered multiple times before moving onto the next subblock. 
             /// obv thats computationally expensive but safer? i guess
             /// IV => ARC() => mod(out, subblock 1) => ARC() => mod(out, subblock 2) => ARC() => mod(out, subblock 3) => ect....
+
+            #region prepare data            
+
+            // TODO: read TODO at the top of the file 🤨
+
+            #endregion
+
+            #region major compute loop
+
+
+
+            #endregion
         }
 
-        #pragma warning restore IDE0003
+#pragma warning restore IDE0003
         #endregion
 
         #region decryption
-        #pragma warning disable IDE0003
+        //#pragma warning disable IDE0003
 
         //public byte[] Decrypt()
 
-        #pragma warning restore IDE0003
+        //#pragma warning restore IDE0003
         #endregion
 
 
@@ -178,7 +196,7 @@ namespace ARC
 
         #region methods and funcs
 
-        private byte[] ModComp(int s, byte[] a)
+        internal byte[] ModComp(int s, byte[] a)
         {
             var o = new byte[s];
 
@@ -204,7 +222,6 @@ namespace ARC
                         s1fo = false;
                 }
             }
-
             return o;
         }
 
@@ -233,7 +250,7 @@ namespace ARC
             return result;
         }
 
-        private void PrintArray(byte[] array, string name = "")
+        internal void PrintArray(byte[] array, string name = "")
         {
             if (name != "")
                 Console.Write($"{name}: ");

@@ -34,8 +34,6 @@ namespace Sandbox
                 foreach (var y in key)
                     c.Write(y.ToString("X"));
                 c.WriteLine($" Size: {key.Length}");
-
-
             }
         }
     }
