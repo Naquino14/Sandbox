@@ -20,21 +20,20 @@ namespace Sandbox
             //    // nah this is inconvenient to use
             //}
 
-            #pragma warning disable IDE0063
-            using (var arc = new ARC128())
-            {
-                c.Write("IV: ");
-                var iv = arc.GenerateIV();
-                foreach (var x in iv)
-                    c.Write(x.ToString("X"));
-                c.WriteLine($" Size: {iv.Length}");
+            var arc = new ARC128();
+            c.Write("IV: ");
+            var iv = arc.GenerateIV();
+            foreach (var x in iv)
+                c.Write(x.ToString("X"));
+            c.WriteLine($" Size: {iv.Length} bytes");
 
-                c.Write(" K: ");
-                var key = arc.GenerateKey();
-                foreach (var y in key)
-                    c.Write(y.ToString("X"));
-                c.WriteLine($" Size: {key.Length}");
-            }
+            c.Write(" K: ");
+            var key = arc.GenerateKey();
+            foreach (var y in key)
+                c.Write(y.ToString("X"));
+            c.WriteLine($" Size: {key.Length} bytes");
+
+            arc.Encrypt("This is random data loleyufucbgfkuyvjsbgdfuikxkhfvbaskiuzghszdkfighawoieuskjghrfpiWUGEPI7FGwyWP9YUERP98SYGPIAHYEPSRDGYUAPEIHY", key, iv);
         }
     }
 }
