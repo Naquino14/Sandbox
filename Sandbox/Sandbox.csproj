@@ -11,4 +11,10 @@
     <PackageReference Include="Google.Protobuf" Version="3.19.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="ARC-128">
+      <HintPath>..\..\ARC-128\ARC-128\bin\Debug\net6.0\ref\ARC-128.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
