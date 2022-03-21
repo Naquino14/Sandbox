@@ -20,18 +20,15 @@
             size++;
         }
 
-        public void Append(Node<T> node)
+        public void Append(Node<T> node) => Append(size, node);
+
+        public void Append(long target, Node<T> node)
         {
             node.index = size;
-            head.next = node;
-            size++;
-            
-        }
-
-        public void Append(Node<T> target, Node<T> node)
-        {
-            node.next = target.next;
-            target.next = node;
+            Node<T> ctx = head;
+            for (int i = 1; i < target; i++)
+                ctx = ctx.next ?? throw new NullReferenceException();
+            ctx.next = node;
             size++;
         }
 
@@ -46,6 +43,12 @@
         public bool TryGetNodeAt(long index, out Node<T>? target)
         {
             // start at base node
+            if (index == 0)
+            {
+                target = head;
+                return true;
+            }
+
             Node<T> ctx;
 
             try
@@ -56,7 +59,7 @@
                     ctx = head.next;
                     for (long i = 1; i <= index; i++)
                     {
-                        if (index == ctx.index)
+                        if (index == (ReferenceEquals(ctx, null) ? throw new ArgumentNullException() : ctx.index))
                         {
                             target = ctx;
                             return true;
@@ -109,6 +112,20 @@
             target = null;
             return false;
         }
-        #pragma warning restore CS8600, CS8602
+#pragma warning restore CS8600, CS8602
+
+        public override string ToString()
+        {
+            string res = $"Size: {size}, Data type: {typeof(T)}, Head Node ID: {head.id ?? "null"}, {{ ";
+            Node<T>? context;
+            for (int i = 0; i < size; i++) // loop thru every node
+            {
+                if (!TryGetNodeAt(i, out context))
+                    res += $"Node at {i} is undefined. ";
+                else
+                    res += $"{(!ReferenceEquals(context, null) ? context.ToString() : $"Node at {i} is null. ")}";
+            }
+            return res += " }";
+        }
     }
 }

@@ -5,10 +5,25 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <Authors>Nathaniel Aquino</Authors>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.19.3" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ACH-1 Demonstrator">
+      <HintPath>..\..\ACH-1\ACH-1 Demonstrator\ACH-1 Demonstrator\bin\Debug\net5.0\ACH-1 Demonstrator.dll</HintPath>
+    </Reference>
+    <Reference Include="AKG-1">
+      <HintPath>..\..\AKG-1\AKG-1\AKG-1\bin\Debug\net6.0\AKG-1.dll</HintPath>
+    </Reference>
+    <Reference Include="ARC-128">
+      <HintPath>..\..\ARC-128\ARC-128\bin\Debug\net6.0\ref\ARC-128.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

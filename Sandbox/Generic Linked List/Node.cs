@@ -29,6 +29,9 @@
 
         public Node<T>? next;
         public Node<T>? previous;
+
+        public override string ToString()
+        { return $"{{ Index: {index}, ID: {id ?? "null"}, Data type: {typeof(T)}, Data: {data} }}, "; }
     }
 
     public sealed class Node : BaseNode
